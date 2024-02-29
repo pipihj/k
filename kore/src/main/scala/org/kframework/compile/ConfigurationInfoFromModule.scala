@@ -1,7 +1,6 @@
 // Copyright (c) Runtime Verification, Inc. All Rights Reserved.
 package org.kframework.compile
 
-import collection._
 import java.util
 import org.kframework.attributes.Att
 import org.kframework.builtin.Sorts
@@ -16,8 +15,8 @@ import org.kframework.kore.KORE.KLabel
 import org.kframework.utils.errorsystem.KEMException
 import org.kframework.POSet
 import org.kframework.TopologicalSort._
+import scala.collection.{ IndexedSeq => _, Seq => _, _ }
 import scala.collection.JavaConverters._
-
 object ConfigurationInfoFromModule
 
 class ConfigurationInfoFromModule(val m: Module) extends ConfigurationInfo {

@@ -40,7 +40,6 @@ import org.kframework.parser.inner.RuleGrammarGenerator;
 import org.kframework.utils.OS;
 import org.kframework.utils.errorsystem.KEMException;
 import scala.Tuple2;
-import scala.collection.Seq;
 import scala.collection.Set;
 
 /**

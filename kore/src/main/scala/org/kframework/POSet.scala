@@ -1,10 +1,10 @@
 // Copyright (c) Runtime Verification, Inc. All Rights Reserved.
 package org.kframework
 
-import collection._
 import java.util
 import org.kframework.utils.errorsystem.KEMException
 import scala.annotation.tailrec
+import scala.collection.{ IndexedSeq => _, Seq => _, _ }
 
 /**
  * A partially ordered set based on an initial set of direct relations.
