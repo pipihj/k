@@ -12,7 +12,7 @@ import scala.collection.{ IndexedSeq => _, Seq => _, _ }
 class POSet[T](val directRelations: Set[(T, T)]) extends Serializable {
   // convert the input set of relations to Map form for performance
   private val directRelationsMap: Map[T, Set[T]] =
-    directRelations.groupBy(_._1).mapValues(_.map(_._2).toSet).map(identity)
+    directRelations.groupBy(_._1).view.mapValues(_.map(_._2).toSet).map(identity).toMap
 
   lazy val elements: Set[T] = directRelations.flatMap(a => Set(a._1, a._2))
 
@@ -78,7 +78,9 @@ class POSet[T](val directRelations: Set[(T, T)]) extends Serializable {
       .toSet[(T, Set[T])]
       .flatMap { case (x, ys) => ys.map(_ -> x) }
       .groupBy(_._1)
+      .view
       .mapValues(_.map(_._2))
+      .toMap
 
   def <(x: T, y: T): Boolean = relations.get(x).exists(_.contains(y))
   def >(x: T, y: T): Boolean = relations.get(y).exists(_.contains(x))
@@ -155,7 +157,7 @@ class POSet[T](val directRelations: Set[(T, T)]) extends Serializable {
 
   override def toString: String =
     "POSet(" + relations
-      .flatMap { case (from, tos) => tos.map(to => from + "<" + to) }
+      .flatMap { case (from, tos) => tos.map(to => from.toString + "<" + to.toString) }
       .mkString(",") + ")"
 
   override def hashCode: Int = relations.hashCode()
@@ -183,5 +185,5 @@ object POSet {
    * using the provided relations map. Input must be non-empty.
    */
   private def upperBounds[T](sorts: Iterable[T], relations: Map[T, Set[T]]): Set[T] =
-    sorts.map(s => relations.getOrElse(s, Set.empty) + s).reduce((a, b) => a & b)
+    sorts.map(s => relations.getOrElse(s, Set.empty) ++ Set(s)).reduce((a, b) => a & b)
 }

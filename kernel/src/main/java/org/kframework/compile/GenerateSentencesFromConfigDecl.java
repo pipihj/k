@@ -145,7 +145,7 @@ public class GenerateSentencesFromConfigDecl {
             if (label.sort().equals(Sort("#CellName"))) {
               String cellName = label.s();
               Sort sort = Sort(getSortOfCell(cellName));
-              Option<Set<Production>> initializerProduction =
+              Option<scala.collection.immutable.Set<Production>> initializerProduction =
                   m.productionsFor().get(KLabel(getInitLabel(sort)));
               if (initializerProduction.isDefined()) {
                 Set<Production> realProds =
@@ -270,7 +270,7 @@ public class GenerateSentencesFromConfigDecl {
             if (label.sort().equals(Sort("#CellName"))) {
               String cellName = label.s();
               Sort sort = Sort(getSortOfCell(cellName));
-              Option<Set<Production>> initializerProduction =
+              Option<scala.collection.immutable.Set<Production>> initializerProduction =
                   m.productionsFor().get(KLabel(getInitLabel(sort)));
               if (initializerProduction.isDefined()) {
                 Set<Production> realProds =

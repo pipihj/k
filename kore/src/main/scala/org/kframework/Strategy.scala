@@ -29,26 +29,28 @@ object Strategy {
         Module(
           module.name,
           module.imports,
-          module.localSentences + Rule(
-            KORE.KApply(
-              KLabels.STRATEGY_CELL,
-              KORE.KApply(KLabels.NO_DOTS),
-              KORE.KRewrite(
-                KORE.KVariable("S", Att.empty.add(Att.SORT, classOf[Sort], Sorts.KItem)),
-                KORE.KSequence(
-                  KORE.KApply(KORE.KLabel("#STUCK")),
-                  KORE.KVariable("S", Att.empty.add(Att.SORT, classOf[Sort], Sorts.KItem))
-                )
+          module.localSentences ++ Set(
+            Rule(
+              KORE.KApply(
+                KLabels.STRATEGY_CELL,
+                KORE.KApply(KLabels.NO_DOTS),
+                KORE.KRewrite(
+                  KORE.KVariable("S", Att.empty.add(Att.SORT, classOf[Sort], Sorts.KItem)),
+                  KORE.KSequence(
+                    KORE.KApply(KORE.KLabel("#STUCK")),
+                    KORE.KVariable("S", Att.empty.add(Att.SORT, classOf[Sort], Sorts.KItem))
+                  )
+                ),
+                KORE.KApply(KLabels.DOTS)
               ),
-              KORE.KApply(KLabels.DOTS)
-            ),
-            KORE.KApply(
-              KLabels.NOT_EQUALS_K,
-              KORE.KVariable("S", Att.empty.add(Att.SORT, classOf[Sort], Sorts.KItem)),
-              KORE.KApply(KORE.KLabel("#STUCK"))
-            ),
-            BooleanUtils.TRUE,
-            Att.empty.add(Att.OWISE)
+              KORE.KApply(
+                KLabels.NOT_EQUALS_K,
+                KORE.KVariable("S", Att.empty.add(Att.SORT, classOf[Sort], Sorts.KItem)),
+                KORE.KApply(KORE.KLabel("#STUCK"))
+              ),
+              BooleanUtils.TRUE,
+              Att.empty.add(Att.OWISE)
+            )
           ),
           module.att
         )
