@@ -2,6 +2,7 @@
 package org.kframework
 
 import scala.annotation.tailrec
+import scala.collection.immutable
 
 /**
  * Created by dwightguth on 4/16/15.
@@ -22,6 +23,6 @@ object TopologicalSort {
     val toPred = edges.foldLeft(Map[A, Set[A]]()) { (acc, e) =>
       acc + (e._1 -> acc.getOrElse(e._1, Set())) + (e._2 -> (acc.getOrElse(e._2, Set()) + e._1))
     }
-    tsort(toPred, Seq())
+    tsort(toPred, immutable.Seq())
   }
 }

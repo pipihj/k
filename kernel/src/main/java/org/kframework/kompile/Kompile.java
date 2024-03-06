@@ -634,7 +634,7 @@ public class Kompile {
   }
 
   private void checkOverloads(Module module) {
-    var withOverload = module.productions().filter(p -> p.att().contains(Att.OVERLOAD())).toSeq();
+    var withOverload = module.productions().filter(p -> p.att().contains(Att.OVERLOAD())).toList();
 
     stream(withOverload)
         .forEach(
@@ -689,7 +689,7 @@ public class Kompile {
         .collect(Collectors.toSet())
         .forEach(
             prod -> {
-              Seq<ProductionItem> items = prod.items();
+              scala.collection.immutable.Seq<ProductionItem> items = prod.items();
               if (items.size() < 3) {
                 return;
               }

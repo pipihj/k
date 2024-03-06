@@ -32,7 +32,7 @@ class POSet[T](val directRelations: Set[(T, T)]) extends Serializable {
     val newRelations = relations.map { case (start, succ) =>
       val newSucc = succ.flatMap(relations.getOrElse(_, Set()))
       if (newSucc.contains(start))
-        constructAndThrowCycleException(start, start, Seq())
+        constructAndThrowCycleException(start, start, immutable.Seq())
       (start, succ | newSucc)
     }
     if (relations != newRelations) transitiveClosure(newRelations) else relations
@@ -48,7 +48,11 @@ class POSet[T](val directRelations: Set[(T, T)]) extends Serializable {
    * @param path
    *   so far
    */
-  private def constructAndThrowCycleException(start: T, current: T, path: Seq[T]): Unit = {
+  private def constructAndThrowCycleException(
+      start: T,
+      current: T,
+      path: immutable.Seq[T]
+  ): Unit = {
     val currentPath = path :+ current
     val succs       = directRelationsMap.getOrElse(current, Set())
     if (succs.contains(start)) {
